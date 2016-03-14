@@ -13,8 +13,7 @@
  * specified, as shown below.
  */
 angular.module( 'ngBoilerplate.home', [
-  'ui.router',
-  'plusOne'
+  'ui.router'
 ])
 
 /**
@@ -39,7 +38,41 @@ angular.module( 'ngBoilerplate.home', [
  * And of course we define a controller for our route.
  */
 .controller( 'HomeCtrl', function HomeController( $scope ) {
-})
+    $scope.inputText = 'The, q,ui,ck br,own fo,x ,jumps, ov,er t,he l,azy dog,';
 
-;
+    $scope.onBtnReverseClick = function () {
+      var inputText = $scope.inputText;
+      $scope.reversedText = "";
+      if(inputText !== undefined){      
+        $scope.reversedText = stringReverse(inputText);
+      }
+    };
+    
+    stringReverse = function (inputText) {
+      var stringSplit = inputText.split(",");
+
+      var reversedTextTemp = inputText.replace( /,/g , "").split("").reverse().join("");
+      var reversedTextFinal = "";
+
+      var end = reversedTextTemp.length;
+      var start = 0;
+      for(var i=0; i<stringSplit.length; i++){
+        var length = stringSplit[i].length;
+        if( length > 0){
+          end = start + length ;
+          var substring = reversedTextTemp.substring(start, end);
+          reversedTextFinal = reversedTextFinal + substring;
+          start = end;
+        }
+
+        if( i !== stringSplit.length-1){
+          reversedTextFinal += ",";
+        }
+          
+      }
+
+      return reversedTextFinal;
+    };
+
+});
 
